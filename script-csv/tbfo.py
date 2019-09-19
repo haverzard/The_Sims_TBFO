@@ -90,8 +90,8 @@ def medsos(a, b, c):
 # BERMAIN KOMPUTER
 def komputer(a, b, c):
 	# komputer
-	if(c+15<=15):
-		c+=15
+	if(b-10>=0) and (c+15<=15):
+		b-=10; c+=15
 	return "{}|{}|{}".format(a,b,c)
 
 # MANDI
