@@ -76,7 +76,7 @@ def buangAir2(a, b, c):
 def kafe(a, b, c):
 	# kafe
 	if(a-5>=0) and (b-10>=0) and (c+15<=15):
-		a-=10; b-=10; c+=15
+		a-=5; b-=10; c+=15
 	return "{}|{}|{}".format(a,b,c)
 
 
