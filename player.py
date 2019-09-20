@@ -18,11 +18,6 @@ class Player:
 		return (a <= 15 and  b <= 15 and c <= 15) and (a >= 0 and b >= 0 and c >= 0)
 	
 	def sign(self, a, b, c):
-		self.hygiene += a
-		self.energy += b
-		self.fun += c
-	
-	def t_sign(self, a, b, c):
 		if (self.check(a,b,c)):
 			self.hygiene += a
 			self.energy += b
@@ -31,37 +26,26 @@ class Player:
 		else:
 			print("Aksi tidak valid")
 		return self
-	
-	def tidur(self, waktu):
-		c = {
-			"Siang": (lambda x: x.t_sign(0,10,0)),
-			"Malam": (lambda x: x.t_sign(0,15,0))
-		}
-		self = c.get(waktu)(self)
 
-	def makan(self, makanan):
-		c = {
-			"Hamburger": (lambda x: x.t_sign(0,5,0)),
-			"Pizza": (lambda x: x.t_sign(0,10,0)),
-			"Steak and Beans": (lambda x: x.t_sign(0,15,0))
+	def doing(self, aksi):
+		choices = {
+			"Tidur Siang": (lambda x: x.sign(0,10,0)),
+			"Tidur Malam": (lambda x: x.sign(0,15,0)),
+			"Makan Hamburger": (lambda x: x.sign(0,5,0)),
+			"Makan Pizza": (lambda x: x.sign(0,10,0)),
+			"Makan Steak and Beans": (lambda x: x.sign(0,15,0)),
+			"Minum Air": (lambda x: x.sign(-5,0,0)),
+			"Minum Kopi": (lambda x: x.sign(-10,5,0)),
+			"Minum Jus": (lambda x: x.sign(-5,10,0)),
+			"Buang Air Kecil": (lambda x: x.sign(5,0,0)),
+			"Buang Air Besar": (lambda x: x.sign(10,-5,0)),
+			# Ubah yg di bawah
+			"Bersosialisasi ke Kafe": (lambda x: x.sign(0,0,0)),
+			"Bermain Media Sosial": (lambda x: x.sign(0,0,0)),
+			"Bermain Komputer": (lambda x: x.sign(0,0,0)),
+			"Mandi": (lambda x: x.sign(0,0,0)),
+			"Cuci Tangan": (lambda x: x.sign(0,0,0)),
+			"Membaca Koran": (lambda x: x.sign(0,0,0)),
+			"Membaca Novel": (lambda x: x.sign(0,0,0))
 		}
-		self = c.get(makanan)(self)
-
-	def minum(self, minuman):
-		c = {
-			"Air": (lambda x: x.t_sign(-5,0,0)),
-			"Kopi": (lambda x: x.t_sign(-10,5,0)),
-			"Jus": (lambda x: x.t_sign(-5,10,0))
-		}
-		self = c.get(minuman)(self)
-	
-	def buang_air(self, ukuran):
-		c = {
-			"Kecil": (lambda x: x.t_sign(5,0,0)),
-			"Besar": (lambda x: x.t_sign(10,-5,0))
-		}
-		self = c.get(ukuran)(self)
-	
-	
-	
-	
+		choices.get(aksi, (lambda x: print("Opsi tidak ada")))(self)
