@@ -6,43 +6,62 @@ class Player:
 		self.fun = 0
 
 	def valueOut(self):
-		print('''Hygiene = {:d}\nEnergy = {:d}\nFun = {:d}''').format(self.hygiene, self.energy, self.fun)
+		print('''Hygiene = {:d}\nEnergy = {:d}\nFun = {:d}'''.format(self.hygiene, self.energy, self.fun))
 
-	def check(self):
-		if (self.hygiene > 15): self.hygiene = 15
-		if (self.energy > 15): self.energy = 15
-		if (self.fun > 15): self.fun = 15
-		if (self.hygiene < 0): self.hygiene = 0
-		if (self.energy < 0): self.energy = 0
-		if (self.fun < 0): self.fun = 0
-		self.valueOut()
+	def IsFinal(self):
+		return (self.hygiene == 15 and  self.energy == 15 and self.fun == 15) or (self.hygiene == 0 and self.energy == 0 and self.fun == 0)
 
-	'''
-			self.hygiene %= 16
-			self.energy %= 16
-			self.fun %= 16
-	'''
-	def tidur(self, waktu):
-		if (waktu == "Siang"):
-			self.energy += 10
+	def check(self, a, b, c):
+		a += self.hygiene
+		b += self.energy
+		c += self.fun
+		return (a <= 15 and  b <= 15 and c <= 15) and (a >= 0 and b >= 0 and c >= 0)
+	
+	def sign(self, a, b, c):
+		self.hygiene += a
+		self.energy += b
+		self.fun += c
+	
+	def t_sign(self, a, b, c):
+		if (self.check(a,b,c)):
+			self.hygiene += a
+			self.energy += b
+			self.fun += c
+			self.valueOut()
 		else:
-			self.energy += 15
-		self.check()
+			print("Aksi tidak valid")
+		return self
+	
+	def tidur(self, waktu):
+		c = {
+			"Siang": (lambda x: x.t_sign(0,10,0)),
+			"Malam": (lambda x: x.t_sign(0,15,0))
+		}
+		self = c.get(waktu)(self)
 
 	def makan(self, makanan):
-		m = {
-			"Hamburger": (lambda x: x+5),
-			"Pizza": (lambda x: x+10),
-			"Steak and Beans": (lambda x: x+15)
+		c = {
+			"Hamburger": (lambda x: x.t_sign(0,5,0)),
+			"Pizza": (lambda x: x.t_sign(0,10,0)),
+			"Steak and Beans": (lambda x: x.t_sign(0,15,0))
 		}
-		self.energy = m.get(makanan)(self.energy)
-		self.check()
+		self = c.get(makanan)(self)
 
 	def minum(self, minuman):
-		m = {
-			"Air": (lambda x,y: (x-5,y)),
-			"Kopi": (lambda x,y: (x-10,y+5)),
-			"Jus": (lambda x,y: (x-5,y+10))
+		c = {
+			"Air": (lambda x: x.t_sign(-5,0,0)),
+			"Kopi": (lambda x: x.t_sign(-10,5,0)),
+			"Jus": (lambda x: x.t_sign(-5,10,0))
 		}
-		self.hygiene, self.energy = m.get(minuman)(self.hygiene, self.energy)
-		self.check()
+		self = c.get(minuman)(self)
+	
+	def buang_air(self, ukuran):
+		c = {
+			"Kecil": (lambda x: x.t_sign(5,0,0)),
+			"Besar": (lambda x: x.t_sign(10,-5,0))
+		}
+		self = c.get(ukuran)(self)
+	
+	
+	
+	
