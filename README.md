@@ -28,3 +28,5 @@ Untuk mempermudah tugas besar ini, elemen waktu tidak diperhitungkan dalam simul
 awal pemain selalu dalam keadaan sudah bangun tidur dengan atribut Hygiene bernilai 0, Energy
 bernilai 10, dan Fun bernilai 0. Permainan dinyatakan selesai jika semua atribut bernilai 0 atau
 semua atribut bernilai 15.
+
+https://docs.google.com/document/d/1mjN0AxYAEWgCJOup5XXeQ8hH3gjMmPL5n_rBh9T2VMY/edit#
